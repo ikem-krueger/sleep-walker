@@ -14,12 +14,12 @@ while True:
 
     if idle <= timeout: # if n-seconds idle...
         if sleeping == True:
-            print("Waking all visible windows up...")
+            print("Waking visible windows up...")
 
             sleeping = False
     else:
         if sleeping == False:
-            print("Putting all windows to sleep...")
+            print("Putting windows to sleep...")
 
             sleeping = True
 
