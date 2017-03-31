@@ -58,7 +58,7 @@ if __name__ == "__main__":
     while True:
         idle = get_idle_time()
 
-        if idle >= timeout: # if n-seconds idle...
+        if idle >= timeout: # if idle for n-seconds...
             if sleeping == False:
                 sleep_windows()
 
