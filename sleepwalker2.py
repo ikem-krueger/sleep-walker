@@ -10,13 +10,10 @@ def get_idle_time():
 
     return idle
 
-'''
-def get_all_window_ids():
-    pass
+def get_cmdline(pid):
+    cmdline = open("/proc/" + str(pid) + "/cmdline").read().split("\0")[0]
 
-def get_visible_window_ids():
-    pass
-'''
+    return cmdline
 
 def wakeup_windows(window_list=None):
     print("Waking windows up...")
@@ -29,28 +26,26 @@ def wakeup_windows(window_list=None):
         pids.add(pid)
 
     for pid in pids:
-        print("Wake up process with pid %s..." % pid)
+        cmdline = get_cmdline(pid)
+
+        print("Wake up process with pid %s (%s)..." % (pid, cmdline))
 
         subprocess.call(["kill", "-SIGCONT", str(pid)])
 
 def sleep_windows(window_list=None):
     print("Putting windows to sleep...")
 
-    active_window = ewmh.getActiveWindow()
-    active_window_pid = ewmh.getWmPid(active_window)
-
     pids = set()
 
     for wid in ewmh.getClientList():
         pid = int(ewmh.getWmPid(wid))
 
-        if pid == active_window_pid:
-            continue
-        else:
-            pids.add(pid)
+        pids.add(pid)
 
     for pid in pids:
-        print("Put process to sleep with pid %s..." % pid)
+        cmdline = get_cmdline(pid)
+
+        print("Put process to sleep with pid %s (%s)..." % (pid, cmdline))
 
         subprocess.call(["kill", "-SIGSTOP", str(pid)])
 
