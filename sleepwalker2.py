@@ -2,25 +2,56 @@
 # -*- coding: utf-8 -*-
 
 import subprocess
+import ewmh
 from time import sleep
 
-timeout = 5.0
-sleeping = False
-
-while True:
+def get_idle_time():
     idle = float(subprocess.check_output(["./xidle"]))
 
-    print("Idle for %s seconds..." % idle)
+    return idle
 
-    if idle <= timeout: # if n-seconds idle...
-        if sleeping == True:
-            print("Waking visible windows up...")
+'''
+def get_all_window_ids():
+    pass
 
-            sleeping = False
-    else:
-        if sleeping == False:
-            print("Putting windows to sleep...")
+def get_visible_window_ids():
+    pass
+'''
 
-            sleeping = True
+def wakeup_windows(window_list=None):
+    print("Waking windows up...")
 
-    sleep(0.25)
+    pids = [1678]
+
+    for pid in pids:
+        print("subprocess.call([\"kill\"], [\"-SIGCONT\"], [%s])" % pid)
+
+def sleep_windows(window_list=None):
+    print("Putting windows to sleep...")
+
+    pids = [1678]
+
+    for pid in pids:
+        print("subprocess.call([\"kill\"], [\"-SIGSTOP\"], [%s])" % pid)
+
+if __name__ == "__main__":
+    timeout = 2.0
+    sleeping = False
+
+    while True:
+        idle = get_idle_time()
+
+        print("Idle for %s seconds..." % idle)
+
+        if idle >= timeout: # if n-seconds idle...
+            if sleeping == False:
+                sleep_windows()
+
+                sleeping = True
+        else:
+            if sleeping == True:
+                wakeup_windows()
+
+                sleeping = False
+
+        sleep(0.25)
