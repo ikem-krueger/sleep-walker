@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
+import os
 import subprocess
 import ewmh
 from time import sleep
@@ -21,22 +22,36 @@ def get_visible_window_ids():
 def wakeup_windows(window_list=None):
     print("Waking windows up...")
 
-    pids = [1678]
+    for wid in ewmh.getClientList():
+        pid = int(ewmh.getWmPid(wid))
 
-    for pid in pids:
-        print("subprocess.call([\"kill\"], [\"-SIGCONT\"], [%s])" % pid)
+        print("Wake window up...")
+
+        subprocess.call(["kill", "-SIGCONT", str(pid)])
 
 def sleep_windows(window_list=None):
     print("Putting windows to sleep...")
 
-    pids = [1678]
+    active_window = ewmh.getActiveWindow()
+    active_window_pid = ewmh.getWmPid(active_window)
 
-    for pid in pids:
-        print("subprocess.call([\"kill\"], [\"-SIGSTOP\"], [%s])" % pid)
+    for wid in ewmh.getClientList():
+        pid = int(ewmh.getWmPid(wid))
+
+        if pid == active_window_pid:
+            print("Skip active window...")
+
+            continue
+        else:
+            print("Put window to sleep...")
+
+            subprocess.call(["kill", "-SIGSTOP", str(pid)])
 
 if __name__ == "__main__":
     timeout = 2.0
     sleeping = False
+
+    ewmh = ewmh.EWMH()
 
     while True:
         idle = get_idle_time()
