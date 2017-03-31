@@ -4,6 +4,7 @@
 import subprocess
 import ewmh
 from time import sleep
+import os
 
 def get_idle_time():
     idle = float(subprocess.check_output(["./xidle"]))
@@ -30,7 +31,8 @@ def get_pids():
     return pids
 
 def wakeup_windows():
-    print("Waking windows up...")
+    #print("Waking windows up...")
+    subprocess.call(["notify-send", "-i", os.getcwd() + "/" + "sleep-walker.png", "Sleep Walker", "Waking windows up..."])
 
     pids = get_pids()
 
@@ -46,7 +48,8 @@ def wakeup_windows():
     sleeping = False
 
 def sleep_windows():
-    print("Putting windows to sleep...")
+    #print("Putting windows to sleep...")
+    subprocess.call(["notify-send", "-i", os.getcwd() + "/" + "sleep-walker.png", "Sleep Walker", "Putting windows to sleep..."])
 
     pids = get_pids()
 
