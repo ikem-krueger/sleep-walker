@@ -43,15 +43,9 @@ if __name__ == "__main__":
 
         print("Idle for %s seconds..." % idle)
 
-<<<<<<< HEAD
         if idle >= timeout: # if n-seconds idle...
             if sleeping == False:
                 sleep_windows()
-=======
-    if idle <= timeout: # if idle for n-seconds...
-        if sleeping == True:
-            print("Waking visible windows up...")
->>>>>>> refs/remotes/origin/master
 
                 sleeping = True
         else:
