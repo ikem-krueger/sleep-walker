@@ -1,0 +1,4 @@
+- gui prototyp
+- exchanging all console tools with python equivalents
+- writing documentation
+- packaging
