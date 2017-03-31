@@ -22,9 +22,7 @@ def get_pids():
         pid = int(ewmh.getWmPid(wid))
         exe = get_exe(pid)
 
-        if exe == "/usr/bin/mate-terminal":
-            print("Filter %s..." % exe)
-
+        if exe in whitelist:
             continue
 
         pids.add(pid)
@@ -67,6 +65,13 @@ if __name__ == "__main__":
     timeout = 5.0
     sleeping = False
 
+    whitelist = [
+        "/usr/bin/mate-panel",
+        "/usr/bin/caja", 
+        "/usr/bin/mate-terminal",
+        "/usr/bin/vlc"
+        ]
+
     ewmh = ewmh.EWMH()
 
     while True:
@@ -81,4 +86,4 @@ if __name__ == "__main__":
             if sleeping == True:
                 wakeup_windows()
 
-        sleep(0.2)
+        sleep(0.25)
