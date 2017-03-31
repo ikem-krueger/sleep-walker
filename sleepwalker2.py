@@ -10,16 +10,22 @@ def get_idle_time():
 
     return idle
 
-def get_cmdline(pid):
-    cmdline = open("/proc/" + str(pid) + "/cmdline").read().split("\0")[0]
+def get_exe(pid):
+    exe = subprocess.check_output(["readlink", "/proc/" + str(pid) + "/exe"]).strip()
 
-    return cmdline
+    return exe
 
 def get_pids():
     pids = set()
 
     for wid in ewmh.getClientList():
         pid = int(ewmh.getWmPid(wid))
+        exe = get_exe(pid)
+
+        if exe == "/usr/bin/mate-terminal":
+            print("Filter %s..." % exe)
+
+            continue
 
         pids.add(pid)
 
@@ -31,9 +37,9 @@ def wakeup_windows():
     pids = get_pids()
 
     for pid in pids:
-        cmdline = get_cmdline(pid)
+        exe = get_exe(pid)
 
-        print("Wake up process with pid %s (%s)..." % (pid, cmdline))
+        print("Wake up process with pid %s (%s)..." % (pid, exe))
 
         subprocess.call(["kill", "-SIGCONT", str(pid)])
 
@@ -47,9 +53,9 @@ def sleep_windows():
     pids = get_pids()
 
     for pid in pids:
-        cmdline = get_cmdline(pid)
+        exe = get_exe(pid)
 
-        print("Put process to sleep with pid %s (%s)..." % (pid, cmdline))
+        print("Put process to sleep with pid %s (%s)..." % (pid, exe))
 
         subprocess.call(["kill", "-SIGSTOP", str(pid)])
 
@@ -58,7 +64,7 @@ def sleep_windows():
     sleeping = True
 
 if __name__ == "__main__":
-    timeout = 2.0
+    timeout = 5.0
     sleeping = False
 
     ewmh = ewmh.EWMH()
@@ -75,4 +81,4 @@ if __name__ == "__main__":
             if sleeping == True:
                 wakeup_windows()
 
-        sleep(0.25)
+        sleep(0.2)
