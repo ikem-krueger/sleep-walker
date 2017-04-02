@@ -31,8 +31,10 @@ def get_pids():
     return pids
 
 def wakeup_windows():
-    #print("Waking windows up...")
-    subprocess.call(["notify-send", "-i", os.getcwd() + "/" + "sleep-walker.png", "Sleep Walker", "Waking windows up..."])
+    print("Waking windows up...")
+
+    if notifications:
+        subprocess.call(["notify-send", "-i", os.getcwd() + "/sleep-walker.svg", "Sleep Walker", "Waking windows up..."])
 
     pids = get_pids()
 
@@ -48,8 +50,10 @@ def wakeup_windows():
     sleeping = False
 
 def sleep_windows():
-    #print("Putting windows to sleep...")
-    subprocess.call(["notify-send", "-i", os.getcwd() + "/" + "sleep-walker.png", "Sleep Walker", "Putting windows to sleep..."])
+    print("Putting windows to sleep...")
+
+    if notifications:
+        subprocess.call(["notify-send", "-i", os.getcwd() + "/sleep-walker.svg", "Sleep Walker", "Putting windows to sleep..."])
 
     pids = get_pids()
 
@@ -67,12 +71,14 @@ def sleep_windows():
 if __name__ == "__main__":
     timeout = 5.0
     sleeping = False
+    notifications = True
 
     whitelist = [
         "/usr/bin/mate-panel",
         "/usr/bin/caja", 
         "/usr/bin/mate-terminal",
-        "/usr/bin/vlc"
+        "/usr/bin/vlc",
+        "/usr/bin/pluma"
         ]
 
     ewmh = ewmh.EWMH()
