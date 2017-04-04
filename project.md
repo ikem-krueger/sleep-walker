@@ -1,6 +1,6 @@
 "must have"|function names|"forgotten"|"nice to have"
 -----------|--------------|-----------|--------------
-||[ ] pc_on_battery()||
+||- [ ] pc_on_battery()||
 ||pc_is_idle()||
 ||user_logged_in()||
 ||window_is_covered()||
