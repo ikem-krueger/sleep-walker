@@ -6,7 +6,7 @@
 ||window_is_covered()||cpusleep
 ||window_is_minimized()||--verbose
 ||window_is_playing_audio()||statistics
-||window_is_active()||
+||window_is_active()||moon phases for the different program states
 
 ### Milestones
 
