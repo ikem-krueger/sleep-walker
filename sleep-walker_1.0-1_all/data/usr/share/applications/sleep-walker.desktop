@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Sleep-Walker
+GenericName=Power Saving Daemon
+Comment=Put your windows to sleep, when they are hidden
+Exec=sleep-walker --tray-icon
+Icon=sleep-walker
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;System;
