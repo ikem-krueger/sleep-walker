@@ -1,0 +1,3 @@
+- merge system/user whitelist
+- whitelist type "set()"
+- implement adding to whitelist
