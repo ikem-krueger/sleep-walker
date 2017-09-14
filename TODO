@@ -1,8 +1,11 @@
-- remove dependency on ewmh
-- remove dependency on libxss-dev
-- import whitelist from the users home
-- convert all lists to sets
-- rewrite xcovered module
-- treat pids as objects
-- make it event based
-- log power statistics
+- [ ] upload missing files
+- [ ] upload newest iteration
+- [ ] upload debian package
+- [ ] remove dependency on ewmh
+- [ ] remove dependency on libxss-dev
+- [ ] import whitelist from the users home
+- [ ] convert all lists to sets
+- [ ] rewrite xcovered module
+- [ ] treat pids as objects
+- [ ] make it event based
+- [ ] log power statistics
