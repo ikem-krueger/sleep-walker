@@ -20,15 +20,15 @@
 #  
 #  
 
-from xcovered import *
-from xidle import get_idle_time
-from time import sleep
-
-import signal
-import ctypes
-import subprocess
+import ewmh
+import xcovered
 import os
+import signal
 import sys
+import subprocess
+
+#from xidle import get_idle_time
+from Xlib import X
 
 def sigterm_handler(signal, frame):
     wake_windows_up()
@@ -44,18 +44,8 @@ def load_whitelist():
             
     return whitelist
 
-def get_all_windows():
-    window_list = ewmh.getClientList()
-
-    return window_list
-
-def get_window_pid(window_id):
-    pid = ewmh.getWmPid(window_id)
-
-    return pid
-
 def get_window_command(window_id):
-    pid = get_window_pid(window_id)
+    pid = ewmh.getWmPid(window_id)
     
     command = get_pid_command(pid)
     
@@ -73,11 +63,10 @@ def get_pid_command(pid):
     return command
 
 def get_all_pids():
-    window_list = get_all_windows()
     pids = []
     
-    for window_id in window_list:
-        pid = get_window_pid(window_id)
+    for window_id in ewmh.getClientList():
+        pid = ewmh.getWmPid(window_id)
         
         pids.append(pid)
     
@@ -113,7 +102,7 @@ def get_active_pids():
     pids = []
     
     active_window_id = ewmh.getActiveWindow()
-    pid = get_window_pid(active_window_id)
+    pid = ewmh.getWmPid(active_window_id)
     
     pids.append(pid)
     
@@ -136,7 +125,7 @@ def wake_pids_up(pids):
 def is_on_current_desktop(window_id):
     window_desktop = ewmh.getWmDesktop(window_id)
     current_desktop = ewmh.getCurrentDesktop()
-    
+
     return window_desktop == current_desktop
 
 def is_active(window_id):
@@ -145,35 +134,37 @@ def is_active(window_id):
     return window_id == active_window_id
 
 def is_minimized(window_id):
-    window_state = ewmh.getWmState(window_id, True)
+    window_state = ewmh.getWmState(window_id)
     
     return '_NET_WM_STATE_HIDDEN' in window_state
 
 def is_playing_audio(window_id):
-    pid = get_window_pid(window_id)
+    pid = ewmh.getWmPid(window_id)
     audio_pids = get_audio_pids()
     
     return pid in audio_pids
 
 def put_windows_to_sleep():
-    window_list_all = get_all_windows()
     sleep_pids = set()
 
-    for window_id in window_list_all:
+    for window_id in ewmh.getClientList():
         window_name = ewmh.getWmName(window_id)
-        pid = get_window_pid(window_id)
+        pid = ewmh.getWmPid(window_id)
         command = get_window_command(window_id)
         
+        '''
         if is_on_current_desktop(window_id):
             if is_minimized(window_id):
                 print("Window %s %s %s %s--> minimzed --> sleep" % (window_id, pid, command, window_name))
 
                 sleep_pids.add(pid)
-            else:
-                if is_fully_covered(window_id):
-                    print("Window %s %s %s %s --> fully covered --> sleep" % (window_id, pid, command, window_name))
+            else xc.is_fully_covered(window_id):
+        '''
+        if is_on_current_desktop(window_id):
+            if xc.is_fully_covered(window_id):
+                print("Window %s %s %s %s --> fully covered --> sleep" % (window_id, pid, command, window_name))
 
-                    sleep_pids.add(pid)
+                sleep_pids.add(pid)
         else:
             print("Window %s %s %s %s --> on other desktop --> sleep" % (window_id, pid, command, window_name))
 
@@ -203,8 +194,8 @@ def main():
     old_active_window = ewmh.getActiveWindow()
 
     while True:
-        ev = ewmh.display.next_event()
-        
+        ev = ewmh.dpy.next_event()        
+
         if ev.type == X.PropertyNotify and \
            ev.state == X.PropertyNewValue and \
            ev.atom == NET_ACTIVE_WINDOW:
@@ -216,6 +207,9 @@ def main():
                     old_active_window = active_window
 
 if __name__ == "__main__":
+    ewmh = ewmh.EWMH()
+    xc = xcovered.XCovered(ewmh)
+
     uid = os.getuid()
     home = os.getenv("HOME")
     
@@ -231,3 +225,4 @@ if __name__ == "__main__":
     #signal.signal(signal.SIGUSR1, sigusr1_handler)
 
     main()
+
