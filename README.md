@@ -1,5 +1,5 @@
-Sleep Walker
+# Sleep Walker
 
 Puts all windows to sleep, which are hidden.
 
-It is losely inspired by Apple's AppNap.
+!["Screenshot of the Sleep Walker"](https://github.com/ikem-krueger/sleep-walker/blob/master/Screenshots/sleep-walker.png)
