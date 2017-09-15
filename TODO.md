@@ -1,3 +1,4 @@
+- [ ] add correct daemon.py version
 - [ ] upload missing files
 - [ ] upload newest iteration
 - [ ] upload debian package
