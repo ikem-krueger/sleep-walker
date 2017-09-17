@@ -7,3 +7,12 @@ Puts all windows to sleep, which are hidden.
 | Operating system | Dependencies         |
 | ---------------- | :------------------- |
 | Linux            | Python 2.x           |
+
+## Installation
+
+Debian:
+
+```
+make deb
+sudo dpkg -i sleep-walker_*.deb
+```
