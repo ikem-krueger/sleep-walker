@@ -8,7 +8,7 @@ Puts all windows to sleep, which are hidden.
 | ---------------- | :------------------- |
 | Linux            | Python 2.x           |
 
-## Installation
+## Installation:
 
 Debian:
 
