@@ -2,6 +2,8 @@
 
 Puts all windows to sleep, which are hidden.
 
+It consists of a daemon and a tray-icon with a gui to edit the whitelist:
+
 !["Screenshot of the Sleep Walker"](https://github.com/ikem-krueger/sleep-walker/blob/master/Screenshot.png)
 
 | Operating system | Dependencies         |
