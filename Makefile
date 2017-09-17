@@ -1,3 +1,3 @@
 deb:
-	ln -s ../debian src/DEBIAN
+	cp -r debian/ src/DEBIAN
 	fakeroot dpkg-deb -b src/
