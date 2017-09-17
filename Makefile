@@ -1,7 +1,3 @@
-PKG_NAME=sleep-walker
-
 deb:
-	mkdir -p ${PKG_NAME}/DEBIAN
-	cp debian/* ${PKG_NAME}/DEBIAN
-	cp -r src/ ${PKG_NAME}/
-	fakeroot dpkg-deb --build ${PKG_NAME}
+	ln -s debian/ src/DEBIAN
+	fakeroot dpkg-deb --build src/
