@@ -80,7 +80,7 @@ def get_stacked_window_ids(window_id):
         end = len(window_ids)
 
         window_ids = window_ids[start:end]
-    except IndexError:
+    except (IndexError, ValueError):
         pass
 
     '''
@@ -157,8 +157,17 @@ def is_fully_covered(window_id):
 
     return fully_covered
 
+'''
+def _get_property(self, win, prop):
+    """Gets an X Window's property, or None."""
+    atom = win.get_full_property(self.dpy.intern_atom(prop), X.AnyPropertyType)
+    if atom:
+        return atom.value
+    return None
+'''
+
 ewmh = ewmh.EWMH()
-property_ = ewmh.display.intern_atom('_NET_FRAME_EXTENTS')
+property_ = ewmh.dpy.intern_atom('_NET_FRAME_EXTENTS')
 type_ = Xatom.CARDINAL
 
 if __name__ == "__main__":

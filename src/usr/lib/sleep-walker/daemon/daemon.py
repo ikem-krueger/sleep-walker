@@ -24,6 +24,7 @@ from xcovered import *
 from xidle import get_idle_time
 from time import sleep
 
+import ewmh
 import signal
 import ctypes
 import subprocess
@@ -145,7 +146,7 @@ def is_active(window_id):
     return window_id == active_window_id
 
 def is_minimized(window_id):
-    window_state = ewmh.getWmState(window_id, True)
+    window_state = ewmh.getWmState(window_id)
     
     return '_NET_WM_STATE_HIDDEN' in window_state
 
@@ -231,6 +232,8 @@ if __name__ == "__main__":
     
     system_whitelist = "/etc/sleep-walker/whitelist"
     user_whitelist = "%s/.sleep-walker/whitelist" % home
+
+    ewmh = ewmh.EWMH()
     
     # get_idle_time(xlib, dpy, root, xss)
     xlib = ctypes.cdll.LoadLibrary('libX11.so')
