@@ -124,7 +124,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem3">
-                        <property name="label" translatable="yes">_Pause</property>
+                        <property name="label" translatable="yes">S_top</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_action_appearance">False</property>
@@ -236,11 +236,11 @@
               <object class="GtkToolButton" id="toolbutton2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="tooltip_markup">Pause daemon</property>
+                <property name="tooltip_markup">Stop daemon</property>
                 <property name="use_action_appearance">False</property>
-                <property name="label" translatable="yes">_Pause</property>
+                <property name="label" translatable="yes">S_top</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-media-pause</property>
+                <property name="stock_id">gtk-media-stop</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -363,7 +363,7 @@
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="stock">gtk-media-pause</property>
+    <property name="stock">gtk-media-stop</property>
   </object>
   <object class="GtkImage" id="image4">
     <property name="visible">True</property>
@@ -393,7 +393,7 @@
   <object class="GtkImage" id="image9">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="stock">gtk-media-pause</property>
+    <property name="stock">gtk-media-stop</property>
   </object>
   <object class="GtkMenu" id="popup_menu">
     <property name="visible">True</property>
@@ -425,8 +425,8 @@
       </object>
     </child>
     <child>
-      <object class="GtkImageMenuItem" id="popup_menu_item_pause">
-        <property name="label" translatable="yes">Pause</property>
+      <object class="GtkImageMenuItem" id="popup_menu_item_stop">
+        <property name="label" translatable="yes">Stop</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="use_action_appearance">False</property>

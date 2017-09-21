@@ -59,7 +59,7 @@ popup_menu = builder.get_object("popup_menu")
 
 popup_menu_item_show_hide = builder.get_object("popup_menu_item_show_hide")
 popup_menu_item_start = builder.get_object("popup_menu_item_start")
-popup_menu_item_pause = builder.get_object("popup_menu_item_pause")
+popup_menu_item_stop = builder.get_object("popup_menu_item_stop")
 popup_menu_item_info = builder.get_object("popup_menu_item_info")
 popup_menu_item_quit = builder.get_object("popup_menu_item_quit")
 
@@ -71,7 +71,7 @@ status_icon.connect("popup-menu", show_popup_menu, popup_menu)
 # popup_menu
 popup_menu_item_show_hide.connect("activate", toggle_window, edit_whitelist, model)
 popup_menu_item_start.connect("activate", start_daemon, popup_menu_item_start, status_icon)
-popup_menu_item_pause.connect("activate", stop_daemon, popup_menu_item_pause, status_icon)
+popup_menu_item_stop.connect("activate", stop_daemon, popup_menu_item_stop, status_icon)
 popup_menu_item_info.connect("activate", show_window, about_dialog)
 popup_menu_item_quit.connect("activate", quit_program, popup_menu_item_quit, status_icon)
 
@@ -80,7 +80,7 @@ imagemenuitem2 = builder.get_object("imagemenuitem2")
 imagemenuitem2.connect("activate", start_daemon, popup_menu_item_start, status_icon)
 
 imagemenuitem3 = builder.get_object("imagemenuitem3")
-imagemenuitem3.connect("activate", stop_daemon, popup_menu_item_pause, status_icon)
+imagemenuitem3.connect("activate", stop_daemon, popup_menu_item_stop, status_icon)
 
 imagemenuitem5 = builder.get_object("imagemenuitem5")
 imagemenuitem5.connect("activate", quit_program, popup_menu_item_quit, status_icon)
@@ -92,7 +92,7 @@ toolbutton1 = builder.get_object("toolbutton1")
 toolbutton1.connect("clicked", start_daemon, popup_menu_item_start, status_icon)
 
 toolbutton2 = builder.get_object("toolbutton2")
-toolbutton2.connect("clicked", stop_daemon, popup_menu_item_pause, status_icon)
+toolbutton2.connect("clicked", stop_daemon, popup_menu_item_stop, status_icon)
 
 #statusbar1 = builder.get_object("statusbar1")
 #statusbar1.push(0, "Daemon is running.")
