@@ -155,29 +155,38 @@ def is_playing_audio(window_id):
     
     return pid in audio_pids
 
+def foo(window_id):
+    sleep_pids = set()
+
+    window_name = ewmh.getWmName(window_id)
+    pid = get_window_pid(window_id)
+    command = get_window_command(window_id)
+    
+    if is_on_current_desktop(window_id):
+        if is_minimized(window_id):
+            print("Window %s %s %s %s--> minimzed --> sleep" % (window_id, pid, command, window_name))
+
+            sleep_pids.add(pid)
+        else:
+            if is_fully_covered(window_id):
+                print("Window %s %s %s %s --> fully covered --> sleep" % (window_id, pid, command, window_name))
+
+                sleep_pids.add(pid)
+    else:
+        print("Window %s %s %s %s --> on other desktop --> sleep" % (window_id, pid, command, window_name))
+
+        sleep_pids.add(pid)
+
+    return sleep_pids
+
 def put_windows_to_sleep():
     window_list_all = get_all_windows()
     sleep_pids = set()
 
     for window_id in window_list_all:
-        window_name = ewmh.getWmName(window_id)
-        pid = get_window_pid(window_id)
-        command = get_window_command(window_id)
+        bla = foo(window_id)
         
-        if is_on_current_desktop(window_id):
-            if is_minimized(window_id):
-                print("Window %s %s %s %s--> minimzed --> sleep" % (window_id, pid, command, window_name))
-
-                sleep_pids.add(pid)
-            else:
-                if is_fully_covered(window_id):
-                    print("Window %s %s %s %s --> fully covered --> sleep" % (window_id, pid, command, window_name))
-
-                    sleep_pids.add(pid)
-        else:
-            print("Window %s %s %s %s --> on other desktop --> sleep" % (window_id, pid, command, window_name))
-
-            sleep_pids.add(pid)
+        sleep_pids.update(bla)
 
     whitelist_pids = set(get_whitelist_pids(sleep_pids, whitelist) + get_audio_pids() + get_active_pids())
     sleep_pids = sleep_pids - whitelist_pids
@@ -196,24 +205,25 @@ def wake_windows_up():
 def main():
     wake_windows_up()
 
-    ewmh.root.change_attributes(event_mask=X.PropertyChangeMask)
-    
-    NET_ACTIVE_WINDOW = 344
-
-    old_active_window = ewmh.getActiveWindow()
+    sleeping = False
 
     while True:
-        ev = ewmh.display.next_event()
-        
-        if ev.type == X.PropertyNotify and \
-           ev.state == X.PropertyNewValue and \
-           ev.atom == NET_ACTIVE_WINDOW:
-                active_window = ewmh.getActiveWindow()
-                
-                if active_window != old_active_window:
-                    put_windows_to_sleep()
+        idle = get_idle_time(xlib, dpy, root, xss)
 
-                    old_active_window = active_window
+        if idle >= timeout: # if idle for n-seconds...
+            if not sleeping:
+                put_windows_to_sleep()
+
+                sleeping = True
+        else:
+            print("Idle for %s seconds..." % idle)
+
+            if sleeping:
+                wake_windows_up()
+
+                sleeping = False
+
+        sleep(0.25)
 
 if __name__ == "__main__":
     uid = os.getuid()
@@ -222,6 +232,14 @@ if __name__ == "__main__":
     system_whitelist = "/etc/sleep-walker/whitelist"
     user_whitelist = "%s/.sleep-walker/whitelist" % home
     
+    # get_idle_time(xlib, dpy, root, xss)
+    xlib = ctypes.cdll.LoadLibrary('libX11.so')
+    dpy = xlib.XOpenDisplay(os.environ['DISPLAY'])
+
+    root = xlib.XDefaultRootWindow(dpy)
+    xss = ctypes.cdll.LoadLibrary('libXss.so.1')
+
+    timeout = 5.0 # debug: need to find the sweet spot...
     notifications = True
 
     whitelist = load_whitelist()
