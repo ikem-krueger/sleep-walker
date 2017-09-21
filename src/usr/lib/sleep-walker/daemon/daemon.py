@@ -20,11 +20,11 @@
 #  
 #  
 
-from xcovered import *
 from xidle import get_idle_time
 from time import sleep
 
 import ewmh
+import xcovered
 import signal
 import ctypes
 import subprocess
@@ -169,7 +169,7 @@ def foo(window_id):
 
             sleep_pids.add(pid)
         else:
-            if is_fully_covered(window_id):
+            if xc.is_fully_covered(window_id):
                 print("Window %s %s %s %s --> fully covered --> sleep" % (window_id, pid, command, window_name))
 
                 sleep_pids.add(pid)
@@ -234,6 +234,7 @@ if __name__ == "__main__":
     user_whitelist = "%s/.sleep-walker/whitelist" % home
 
     ewmh = ewmh.EWMH()
+    xc = xcovered.XCovered(ewmh)
     
     # get_idle_time(xlib, dpy, root, xss)
     xlib = ctypes.cdll.LoadLibrary('libX11.so')
