@@ -7,5 +7,3 @@ if which pycompile >/dev/null 2>&1; then
 fi
 
 # End automatically added section
-
-pip install ewmh

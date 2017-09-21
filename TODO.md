@@ -1,11 +1,12 @@
-- [ ] upload missing files
-- [ ] upload newest iteration
+- [ ] add correct daemon.py version
+- [x] upload missing files
+- [x] upload newest iteration
 - [ ] upload debian package
-- [ ] remove dependency on ewmh
-- [ ] remove dependency on libxss-dev
-- [ ] import whitelist from the users home
+- [x] remove dependency on ewmh
+- [x] remove dependency on libxss-dev
+- [x] import whitelist from the users home
 - [ ] convert all lists to sets
-- [ ] rewrite xcovered module
+- [x] rewrite xcovered module
 - [ ] treat pids as objects
-- [ ] make it event based
+- [x] make it event based
 - [ ] log power statistics
