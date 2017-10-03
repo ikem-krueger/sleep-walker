@@ -1,8 +1,8 @@
 - [ ] fix bad window error 
-- [ ] add correct daemon.py version
+- [x] add correct daemon.py version
 - [x] upload missing files
 - [x] upload newest iteration
-- [ ] upload debian package
+- [x] upload debian package
 - [x] remove dependency on ewmh
 - [x] remove dependency on libxss-dev
 - [x] import whitelist from the users home
