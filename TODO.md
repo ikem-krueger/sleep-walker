@@ -1,3 +1,4 @@
+- [ ] fix bad window error 
 - [ ] add correct daemon.py version
 - [x] upload missing files
 - [x] upload newest iteration
