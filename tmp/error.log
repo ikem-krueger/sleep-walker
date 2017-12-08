@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/usr/lib/sleep-walker/daemon/daemon.py", line 255, in <module>
+    main()
+  File "/usr/lib/sleep-walker/daemon/daemon.py", line 216, in main
+    put_windows_to_sleep()
+  File "/usr/lib/sleep-walker/daemon/daemon.py", line 188, in put_windows_to_sleep
+    bla = foo(window_id)
+  File "/usr/lib/sleep-walker/daemon/daemon.py", line 162, in foo
+    window_name = ewmh.getWmName(window_id)
+  File "/usr/lib/sleep-walker/daemon/ewmh.py", line 102, in getWmName
+    name = self._get_property(win, '_NET_WM_NAME')
+  File "/usr/lib/sleep-walker/daemon/ewmh.py", line 42, in _get_property
+    atom = win.get_full_property(self.dpy.intern_atom(prop), X.AnyPropertyType)
+  File "/usr/lib/pymodules/python2.7/Xlib/xobject/drawable.py", line 459, in get_full_property
+    prop = self.get_property(property, type, 0, sizehint)
+  File "/usr/lib/pymodules/python2.7/Xlib/xobject/drawable.py", line 448, in get_property
+    long_length = length)
+  File "/usr/lib/pymodules/python2.7/Xlib/protocol/rq.py", line 1428, in __init__
+    self.reply()
+  File "/usr/lib/pymodules/python2.7/Xlib/protocol/rq.py", line 1448, in reply
+    raise self._error
+Xlib.error.BadWindow: <class 'Xlib.error.BadWindow'>: code = 3, resource_id = Xlib.xobject.resource.Resource(0x04e7443d), sequence_number = 29620, major_opcode = 20, minor_opcode = 0
+
+^CTraceback (most recent call last):
+  File "/usr/lib/sleep-walker/tray-icon/tray-icon.py", line 102, in <module>
+    gtk.main()
+KeyboardInterrupt
